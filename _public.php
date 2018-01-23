@@ -64,8 +64,8 @@ class publicArlequinEngine
 	
 	public static function switchTheme($blog,$theme)
 	{
-		if ($blog->settings->multitheme->mt_exclude) {
-			if (in_array($theme,explode('/',$blog->settings->multitheme->mt_exclude))) {
+		if ($blog->settings->arlequinMulti->mt_exclude) {
+			if (in_array($theme,explode('/',$blog->settings->arlequinMulti->mt_exclude))) {
 				return;
 			}
 		}
@@ -93,7 +93,7 @@ class publicArlequinInterface
 		if ($w->offline)
 			return;
 		
-		$cfg = @unserialize($core->blog->settings->multitheme->get('mt_cfg'));
+		$cfg = @unserialize($core->blog->settings->arlequinMulti->get('mt_cfg'));
 
 		if (($w->homeonly == 1 && $core->url->type != 'default') ||
 			($w->homeonly == 2 && $core->url->type == 'default')) {
@@ -172,10 +172,10 @@ class publicArlequinInterface
 	{
 		global $core;
 		
-		$mt_exclude = $core->blog->settings->multitheme->mt_exclude;
+		$mt_exclude = $core->blog->settings->arlequinMulti->mt_exclude;
 		$exclude = array();
 		if (!empty($mt_exclude)) {
-			$exclude = array_flip(explode('/',$core->blog->settings->multitheme->mt_exclude));
+			$exclude = array_flip(explode('/',$core->blog->settings->arlequinMulti->mt_exclude));
 		}
 		
 		$names = array_diff_key($core->themes->getModules(),$exclude);

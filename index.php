@@ -26,7 +26,7 @@ try
 	/* Initialisation
 	--------------------------------------------------- */
 	
-	$core->blog->settings->addNameSpace('multitheme');
+	$core->blog->settings->addNameSpace('arlequinMulti');
 	list($mt_cfg,$mt_exclude) =
 		adminArlequin::loadSettings ($core->blog->settings,$initialized);
 	
@@ -46,16 +46,16 @@ try
 	
 	if (isset($_POST['mt_action_config']))
 	{
-		$core->blog->settings->multitheme->put('mt_cfg',serialize($mt_cfg));
-		$core->blog->settings->multitheme->put('mt_exclude',$mt_exclude);
+		$core->blog->settings->arlequinMulti->put('mt_cfg',serialize($mt_cfg));
+		$core->blog->settings->arlequinMulti->put('mt_exclude',$mt_exclude);
 		$messages[] = __('Settings have been successfully updated.');
 		$core->blog->triggerBlog();
 		http::redirect($p_url.'&config=1');
 	}
 	if (isset($_POST['mt_action_restore']))
 	{
-		$core->blog->settings->multitheme->drop('mt_cfg');
-		$core->blog->settings->multitheme->drop('mt_exclude');
+		$core->blog->settings->arlequinMulti->drop('mt_cfg');
+		$core->blog->settings->arlequinMulti->drop('mt_exclude');
 		$core->blog->triggerBlog();
 		http::redirect($p_url.'&restore=1');
 	}
@@ -124,15 +124,16 @@ echo
 	form::textArea('s_html',50,10,html::escapeHTML($mt_cfg['s_html'])).'</p>
 <div class="col">
 <p><label>'.__('Item HTML code:').' '.
-	form::field('e_html',35,'',html::escapeHTML($mt_cfg['e_html'])).'</label></p>
+	form::field('e_html',50,'',html::escapeHTML($mt_cfg['e_html'])).'</label></p>
 <p><label>'.__('Active item HTML code:').' '.
-	form::field('a_html',35,'',html::escapeHTML($mt_cfg['a_html'])).'</label></p>
+	form::field('a_html',50,'',html::escapeHTML($mt_cfg['a_html'])).'</label></p>
 </div><br class="clear" />
 
 <p><label>'.__('Excluded themes (separated by slashs \'/\'):').' '.
-	form::field(array('mt_exclude'),40,'',html::escapeHTML($mt_exclude)).'</label></p>
+	form::field(array('mt_exclude'),50,'',html::escapeHTML($mt_exclude)).'</label></p>
+	<p class="info">'.__('The names to be taken into account are those of the theme files.').'</p>
 </div>
-<p><input type="submit" name="mt_action_config" value="'.__('Update').'" />
+<p><input type="submit" name="mt_action_config" value="'.__('Save').'" />
 	<input type="submit" name="mt_action_restore" value="'.__('Restore defaults').'" />'.
 	(is_callable(array($core,'formNonce')) ? $core->formNonce() : '').'</p>
 </form>';

@@ -50,8 +50,8 @@ class adminArlequin
 		global $core;
 		
 		$initialized = false;
-		$mt_cfg = @unserialize($settings->multitheme->get('mt_cfg'));
-		$mt_exclude = $settings->multitheme->get('mt_exclude');
+		$mt_cfg = @unserialize($settings->arlequinMulti->get('mt_cfg'));
+		$mt_exclude = $settings->arlequinMulti->get('mt_exclude');
 	
 		// Paramètres corrompus ou inexistants
 		if ($mt_cfg === false ||
@@ -61,9 +61,9 @@ class adminArlequin
 			isset($mt_cfg['s_html'])))
 		{
 			$mt_cfg = adminArlequin::getDefaults();
-			$settings->addNameSpace('multitheme');
-			$settings->multitheme->put('mt_cfg',serialize($mt_cfg),'string','Arlequin configuration');
-			$settings->multitheme->put('mt_exclude','customCSS','string','Excluded themes');
+			$settings->addNameSpace('arlequinMulti');
+			$settings->arlequinMulti->put('mt_cfg',serialize($mt_cfg),'string','Arlequin configuration');
+			$settings->arlequinMulti->put('mt_exclude','customCSS','string','Excluded themes');
 			$initialized = true;
 			$core->blog->triggerBlog();
 		}

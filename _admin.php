@@ -15,7 +15,7 @@
 \***************************************************************/
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
-$_menu['Blog']->addItem(__('Theme switcher'),'plugin.php?p=arlequin',
+$_menu['Blog']->addItem(__('Arlequin'),'plugin.php?p=arlequin',
 	'index.php?pf=arlequin/icon.png',
 	preg_match('/plugin.php\?p=arlequin(&.*)?$/',$_SERVER['REQUEST_URI']),
 	$core->auth->check('contentadmin',$core->blog->id));
@@ -27,7 +27,7 @@ $core->addBehavior('adminDashboardFavorites','arlequinDashboardFavorites');
 function arlequinDashboardFavorites($core,$favs)
 {
 	$favs->register('arlequin', array(
-		'title' => __('Theme switcher'),
+		'title' => __('Arlequin'),
 		'url' => 'plugin.php?p=arlequin',
 		'small-icon' => 'index.php?pf=arlequin/icon.png',
 		'large-icon' => 'index.php?pf=arlequin/icon-big.png',

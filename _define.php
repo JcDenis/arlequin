@@ -19,12 +19,12 @@ $this->registerModule(
 	/* Name */		'Arlequin',
 	/* Description*/	'Allows visitors choose a theme',
 	/* Author */		'Oleksandr Syenchuk, Pierre Van Glabeke',
-	/* Version */		'1.1',
+	/* Version */		'1.3',
 	/* Properties */
 	array(
 		'permissions' => 'contentadmin',
 		'type' => 'plugin',
-		'dc_min' => '2.7',
+		'dc_min' => '2.12',
 		'support' => 'http://forum.dotclear.org/viewtopic.php?id=48345',
 		'details' => 'http://plugins.dotaddict.org/dc2/details/arlequin'
 		)
