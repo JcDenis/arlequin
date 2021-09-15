@@ -124,13 +124,13 @@ echo
 	form::textArea('s_html',50,10,html::escapeHTML($mt_cfg['s_html'])).'</p>
 <div class="col">
 <p><label>'.__('Item HTML code:').' '.
-	form::field('e_html',50,'',html::escapeHTML($mt_cfg['e_html'])).'</label></p>
+	form::field('e_html',50,'20',html::escapeHTML($mt_cfg['e_html'])).'</label></p>
 <p><label>'.__('Active item HTML code:').' '.
-	form::field('a_html',50,'',html::escapeHTML($mt_cfg['a_html'])).'</label></p>
+	form::field('a_html',50,'20',html::escapeHTML($mt_cfg['a_html'])).'</label></p>
 </div><br class="clear" />
 
 <p><label>'.__('Excluded themes (separated by slashs \'/\'):').' '.
-	form::field(array('mt_exclude'),50,'',html::escapeHTML($mt_exclude)).'</label></p>
+	form::field(array('mt_exclude'),50,'20',html::escapeHTML($mt_exclude)).'</label></p>
 	<p class="info">'.__('The names to be taken into account are those of the theme files.').'</p>
 </div>
 <p><input type="submit" name="mt_action_config" value="'.__('Save').'" />
