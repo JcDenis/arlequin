@@ -1,37 +1,38 @@
-v1.5 - 16-09-2021 Pierre Van Glabeke
+1.6 - 2022.12.14
+* Update to dotclear 2.24
+
+1.5 - 2021.09.16 Pierre Van Glabeke
 * champs rallongés
 
-v1.4 - 15-09-2021 - Pierre Van Glabeke
+1.4 - 2021.09.15 - Pierre Van Glabeke
 * correction bug affichage dc2.19
 * dc2.19 requis
 
-v1.3 - 21-01-2018 - Pierre Van Glabeke
+1.3 - 2018.01.21 - Pierre Van Glabeke
 * modif setting
 * modif index
 * modif localisation
 
-v1.2 - 12-06-2016 - Pierre Van Glabeke
+1.2 - 2.16.06.12 - Pierre Van Glabeke
 * ajout code sécu resources.php
 * modif intitulé dans admin
 
-v1.1 - 05-03-2015 - Pierre Van Glabeke
+1.1 - 2.15.03.05 - Pierre Van Glabeke
 * compatibilité dc2.7
 * cosmétique dc2.6
 * localisation
 * aide intégrée
 * version effectuée depuis la v1.0.1 présente sur DA
 
-2010-07-15  Gaetan Guillard  <gaetan@bistroduweb.com>
+0.x - 2010.07.15  Gaetan Guillard  <gaetan@bistroduweb.com>
 * v1.0.1 - Corrections for compatibility with Dotclear 2.2
 
-2008-10-18  Oleksandr Syenchuk  <sacha@xn--phnix-csa.net>
+0.x - 2008.10.18  Oleksandr Syenchuk  <sacha@xn--phnix-csa.net>
 * v2008.10 - Removed theme parameter from URL
 
-
-2008-08-21  Oleksandr Syenchuk  <sacha@xn--phnix-csa.net>
+0.x - 2008.08.21  Oleksandr Syenchuk  <sacha@xn--phnix-csa.net>
 * Excluded themes can not be selected by user.
 
-
-2008-04-21  Oleksandr Syenchuk  <sacha@xn--phnix-csa.net>
+0.x - 2008.04.21  Oleksandr Syenchuk  <sacha@xn--phnix-csa.net>
 * Dotclear r1790 compatibility, see
    http://dev.dotclear.net/2.0/changeset/1790

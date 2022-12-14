@@ -1,36 +1,44 @@
-<?php /* -*- tab-width: 5; indent-tabs-mode: t; c-basic-offset: 5 -*- */
-/***************************************************************\
- *  This is 'Arlequin', a plugin for Dotclear 2                *
- *                                                             *
- *  Copyright (c) 2007,2015                                    *
- *  Oleksandr Syenchuk and contributors.                       *
- *                                                             *
- *  This is an open source software, distributed under the GNU *
- *  General Public License (version 2) terms and  conditions.  *
- *                                                             *
- *  You should have received a copy of the GNU General Public  *
- *  License along with 'Arlequin' (see COPYING.txt);           *
- *  if not, write to the Free Software Foundation, Inc.,       *
- *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
-\***************************************************************/
-if (!defined('DC_CONTEXT_ADMIN')) { return; }
-
-$_menu['Blog']->addItem(__('Arlequin'),'plugin.php?p=arlequin',
-	'index.php?pf=arlequin/icon.png',
-	preg_match('/plugin.php\?p=arlequin(&.*)?$/',$_SERVER['REQUEST_URI']),
-	$core->auth->check('contentadmin',$core->blog->id));
-
-require dirname(__FILE__).'/_widgets.php';
-
-$core->addBehavior('adminDashboardFavorites','arlequinDashboardFavorites');
-
-function arlequinDashboardFavorites($core,$favs)
-{
-	$favs->register('arlequin', array(
-		'title' => __('Arlequin'),
-		'url' => 'plugin.php?p=arlequin',
-		'small-icon' => 'index.php?pf=arlequin/icon.png',
-		'large-icon' => 'index.php?pf=arlequin/icon-big.png',
-		'permissions' => 'usage,contentadmin'
-	));
+<?php
+/**
+ * @brief arlequin, a plugin for Dotclear 2
+ *
+ * @package Dotclear
+ * @subpackage Plugin
+ *
+ * @author Oleksandr Syenchuk, Pierre Van Glabeke and contributors
+ *
+ * @copyright Jean-Crhistian Denis
+ * @copyright GPL-2.0 https://www.gnu.org/licenses/gpl-2.0.html
+ */
+if (!defined('DC_CONTEXT_ADMIN')) {
+    return;
 }
+
+require __DIR__ . '/_widgets.php';
+
+// Admin sidebar menu
+dcCore::app()->menu[dcAdmin::MENU_BLOG]->addItem(
+    __('Arlequin'),
+    dcCore::app()->adminurl->get('admin.plugin.' . basename(__DIR__)),
+    dcPage::getPF(basename(__DIR__) . '/icon.png'),
+    preg_match(
+        '/' . preg_quote(dcCore::app()->adminurl->get('admin.plugin.' . basename(__DIR__))) . '(&.*)?$/',
+        $_SERVER['REQUEST_URI']
+    ),
+    dcCore::app()->auth->check(dcCore::app()->auth->makePermissions([
+        dcAuth::PERMISSION_CONTENT_ADMIN,
+    ]), dcCore::app()->blog->id)
+);
+
+// Admin dashbaord favorite
+dcCore::app()->addBehavior('adminDashboardFavoritesV2', function ($favs) {
+    $favs->register(basename(__DIR__), [
+        'title'       => __('Arlequin'),
+        'url'         => dcCore::app()->adminurl->get('admin.plugin.' . basename(__DIR__)),
+        'small-icon'  => dcPage::getPF(basename(__DIR__) . '/icon.png'),
+        'large-icon'  => dcPage::getPF(basename(__DIR__) . '/icon-big.png'),
+        'permissions' => dcCore::app()->auth->makePermissions([
+            dcAuth::PERMISSION_CONTENT_ADMIN,
+        ]),
+    ]);
+});

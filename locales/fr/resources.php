@@ -1,20 +1,17 @@
 <?php
-/***************************************************************\
- *  This is 'Arlequin', a plugin for Dotclear 2                *
- *                                                             *
- *  Copyright (c) 2007,2010                                    *
- *  Oleksandr Syenchuk and contributors.                       *
- *                                                             *
- *  This is an open source software, distributed under the GNU *
- *  General Public License (version 2) terms and  conditions.  *
- *                                                             *
- *  You should have received a copy of the GNU General Public  *
- *  License along with 'Arlequin' (see COPYING.txt);           *
- *  if not, write to the Free Software Foundation, Inc.,       *
- *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
-\***************************************************************/
-if (!defined('DC_RC_PATH')){return;}
-if (!isset($__resources['help']['arlequin']))
-{
-	$__resources['help']['arlequin'] = dirname(__FILE__).'/help/arlequin.html';
+/**
+ * @brief arlequin, a plugin for Dotclear 2
+ *
+ * @package Dotclear
+ * @subpackage Plugin
+ *
+ * @author Oleksandr Syenchuk, Pierre Van Glabeke and contributors
+ *
+ * @copyright Jean-Crhistian Denis
+ * @copyright GPL-2.0 https://www.gnu.org/licenses/gpl-2.0.html
+ */
+if (!defined('DC_RC_PATH')) {
+    return;
 }
+
+dcCore::app()->resources['help']['arlequin'] = __DIR__ . '/help/arlequin.html';
