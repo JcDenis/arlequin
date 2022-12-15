@@ -32,7 +32,7 @@ msgid "Settings have been reinitialized."
 msgstr "Les paramètres ont été réinitialisés."
 
 msgid "System settings have been updated."
-msgstr "Les paramètres on tété mis à jour."
+msgstr "Les paramètres ont été mis à jour."
 
 msgid "Predefined models"
 msgstr "Modèles prédéfinis"
