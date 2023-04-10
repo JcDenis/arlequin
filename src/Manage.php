@@ -112,10 +112,10 @@ class Manage extends dcNsProcess
 
         dcCore::app()->callBehavior('arlequinAddModels', $models);
 
-        $models  = iterator_to_array($models);
-        $s       = dcCore::app()->blog->settings->get(My::id());
-        $model   = json_decode((string) $s->get('model'), true);
-        $header  = '';
+        $models = iterator_to_array($models);
+        $s      = dcCore::app()->blog->settings->get(My::id());
+        $model  = json_decode((string) $s->get('model'), true);
+        $header = '';
 
         foreach ($models as $m) {
             $header .= "\t" .
@@ -172,7 +172,7 @@ class Manage extends dcNsProcess
             (new Div())->class('two-boxes odd')->items([
                 (new Para())->items([
                     (new Label(__('Excluded themes:'), Label::OUTSIDE_LABEL_BEFORE))->for('exclude'),
-                    (new Input('exclude'))->size(50)->maxlenght(200)->value(Html::escapeHTML($s->exclude)),
+                    (new Input('exclude'))->size(50)->maxlenght(200)->value(Html::escapeHTML($s->get('exclude'))),
                 ]),
                 (new Note())->class('form-note')->text('Semicolon separated list of themes IDs (theme folder name). Ex: ductile;berlin'),
             ]),
