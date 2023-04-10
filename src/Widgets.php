@@ -7,25 +7,28 @@
  *
  * @author Oleksandr Syenchuk, Pierre Van Glabeke and contributors
  *
- * @copyright Jean-Crhistian Denis
+ * @copyright Jean-Christian Denis
  * @copyright GPL-2.0 https://www.gnu.org/licenses/gpl-2.0.html
  */
-if (!defined('DC_RC_PATH')) {
-    return;
-}
+declare(strict_types=1);
 
-dcCore::app()->addBehavior('initWidgets', ['adminArlequin','initWidgets']);
+namespace Dotclear\Plugin\arlequin;
 
-class adminArlequin
+use dcCore;
+use dcModuleDefine;
+use Dotclear\Helper\Html\Html;
+use Dotclear\Helper\Network\Http;
+use Dotclear\Plugin\widgets\WidgetsStack;
+use Dotclear\Plugin\widgets\WidgetsElement;
+
+class Widgets
 {
-    public static $initialized = false;
-
-    public static function initWidgets($w)
+    public static function initWidgets(WidgetsStack $w): void
     {
         $w->create(
             'arlequin',
-            __('Arlequin'),
-            ['publicArlequinInterface','arlequinWidget'],
+            My::name(),
+            [self::class,'parseWidget'],
             null,
             __('Theme switcher')
         )
@@ -36,31 +39,80 @@ class adminArlequin
         ->addOffline();
     }
 
-    public static function getDefaults()
+    public static function parseWidget(WidgetsElement $w): string
     {
-        return [
-            'e_html' => '<li><a href="%1$s%2$s%3$s">%4$s</a></li>',
-            'a_html' => '<li><strong>%4$s</strong></li>',
-            's_html' => '<ul>%2$s</ul>',
-        ];
-    }
-
-    public static function loadSettings($settings)
-    {
-        self::$initialized = false;
-        $mt_cfg            = @unserialize($settings->arlequinMulti->get('mt_cfg'));
-        $mt_exclude        = $settings->arlequinMulti->get('mt_exclude');
-
-        // Paramètres corrompus ou inexistants
-        if ($mt_cfg === false || $mt_exclude === null || !(isset($mt_cfg['e_html']) && isset($mt_cfg['a_html']) && isset($mt_cfg['s_html']))) {
-            $mt_cfg = adminArlequin::getDefaults();
-            $settings->addNamespace('arlequinMulti');
-            $settings->arlequinMulti->put('mt_cfg', serialize($mt_cfg), 'string', 'Arlequin configuration');
-            $settings->arlequinMulti->put('mt_exclude', 'customCSS', 'string', 'Excluded themes');
-            self::$initialized = true;
-            dcCore::app()->blog->triggerBlog();
+        if ($w->offline || !$w->checkHomeOnly(dcCore::app()->url->type)) {
+            return '';
         }
 
-        return [$mt_cfg,$mt_exclude];
+        $model = json_decode((string) dcCore::app()->blog->settings->get(My::id())->get('model'), true);
+        $names = self::getNames();
+        if (!is_array($model) || empty($names)) {
+            return '';
+        }
+
+        # Current page URL and the associated query string. Note : the URL for
+        # the switcher ($s_url) is different to the URL for an item ($e_url)
+        $s_url = $e_url = Http::getSelfURI();
+
+        # If theme setting is already present in URL, we will replace its value
+        $replace = preg_match('/(\\?|&)theme\\=[^&]*/', $e_url);
+
+        # URI extension to send theme setting by query string
+        if ($replace) {
+            $ext = '';
+        } elseif (strpos($e_url, '?') === false) {
+            $ext = '?theme=';
+        } else {
+            $ext = (substr($e_url, -1) == '?' ? '' : '&amp;') . 'theme=';
+        }
+
+        $res = '';
+        foreach ($names as $k => $v) {
+            if ($k == dcCore::app()->public->theme) {
+                $format = $model['a_html'];
+            } else {
+                $format = $model['e_html'];
+            }
+
+            if ($replace) {
+                $e_url = preg_replace(
+                    '/(\\?|&)(theme\\=)([^&]*)/',
+                    '$1${2}' . addcslashes($k, '$\\'),
+                    $e_url
+                );
+                $val = '';
+            } else {
+                $val = Html::escapeHTML(rawurlencode($k));
+            }
+            $res .= sprintf(
+                $format,
+                $e_url,
+                $ext,
+                $val,
+                Html::escapeHTML($v['name']),
+                Html::escapeHTML($v['desc']),
+                Html::escapeHTML($k)
+            );
+        }
+
+        # Nothing to display
+        if (!trim($res)) {
+            return '';
+        }
+
+        return $w->renderDiv(
+            (bool) $w->content_only,
+            'arlequin ' . $w->class,
+            '',
+            ($w->title ? $w->renderTitle(Html::escapeHTML($w->title)) : '') . sprintf($model['s_html'], $s_url, $res)
+        );
+    }
+
+    public static function getNames(): array
+    {
+        $exclude = explode(';', (string) dcCore::app()->blog->settings->get(My::id())->get('exclude'));
+
+        return array_diff_key(dcCore::app()->themes->getDefines(['state' => dcModuleDefine::STATE_ENABLED], true), array_flip($exclude));
     }
 }
