@@ -1,3 +1,10 @@
+2.0 - 2023.04.11
+* require Dotclear 2.26
+* use namespace
+* add behavior to register models
+* move settings names (lost previously saved)
+* move models (lost previously saved)
+
 1.6 - 2022.12.14
 * Update to dotclear 2.24
 

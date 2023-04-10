@@ -7,7 +7,7 @@
  *
  * @author Oleksandr Syenchuk, Pierre Van Glabeke and contributors
  *
- * @copyright Jean-Crhistian Denis
+ * @copyright Jean-Christian Denis
  * @copyright GPL-2.0 https://www.gnu.org/licenses/gpl-2.0.html
  */
 if (!defined('DC_RC_PATH')) {
@@ -18,9 +18,9 @@ $this->registerModule(
     'Arlequin',
     'Allows visitors choose a theme',
     'Oleksandr Syenchuk, Pierre Van Glabeke and contributors',
-    '1.6',
+    '2.0',
     [
-        'requires'    => [['core', '2.24']],
+        'requires'    => [['core', '2.26']],
         'permissions' => dcCore::app()->auth->makePermissions([
             dcAuth::PERMISSION_CONTENT_ADMIN,
         ]),
