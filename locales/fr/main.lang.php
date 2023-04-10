@@ -18,7 +18,7 @@ L10n::$locales['Bullets list']                                                  
 L10n::$locales['Scrolled list']                                                    = 'Liste déroulante';
 L10n::$locales['active theme']                                                     = 'thème actif';
 L10n::$locales['Settings have been reinitialized.']                                = 'Les paramètres ont été réinitialisés.';
-L10n::$locales['System settings have been updated.']                               = 'Les paramètres on tété mis à jour.';
+L10n::$locales['System settings have been updated.']                               = 'Les paramètres ont été mis à jour.';
 L10n::$locales['Predefined models']                                                = 'Modèles prédéfinis';
 L10n::$locales['Select a model']                                                   = 'Sélectionnez un modèle';
 L10n::$locales['Switcher display format']                                          = 'Format d\'affichage du sélecteur';
