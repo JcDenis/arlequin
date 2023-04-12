@@ -115,9 +115,11 @@ class Manage extends dcNsProcess
         $models = iterator_to_array($models);
         $s      = dcCore::app()->blog->settings->get(My::id());
         $model  = json_decode((string) $s->get('model'), true);
+        $model  = array_merge(My::defaultModel(), is_array($model) ? $model : []);
         $header = '';
 
         foreach ($models as $m) {
+            $m = array_merge(My::defaultModel(), $m);
             $header .= "\t" .
                 'arlequin.addModel(' .
                 '"' . Html::escapeJS($m['name']) . '",' .

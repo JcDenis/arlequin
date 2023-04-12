@@ -85,6 +85,7 @@ class My
     public static function defaultModel(): array
     {
         return [
+            'name'   => __('Default'),
             'e_html' => '<li><a href="%1$s%2$s%3$s">%4$s</a></li>',
             'a_html' => '<li><strong>%4$s</strong></li>',
             's_html' => '<ul>%2$s</ul>',
