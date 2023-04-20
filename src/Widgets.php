@@ -45,9 +45,15 @@ class Widgets
             return '';
         }
 
-        $model = json_decode((string) dcCore::app()->blog->settings->get(My::id())->get('model'), true);
-        $names = self::getNames();
-        if (!is_array($model) || empty($names)) {
+        // nullsafe PHP < 8.0
+        if (is_null(dcCore::app()->blog)) {
+            return '';
+        }
+
+        $model   = json_decode((string) dcCore::app()->blog->settings->get(My::id())->get('model'), true);
+        $exclude = explode(';', (string) dcCore::app()->blog->settings->get(My::id())->get('exclude'));
+        $modules = array_diff_key(dcCore::app()->themes->getDefines(['state' => dcModuleDefine::STATE_ENABLED], true), array_flip($exclude));
+        if (!is_array($model) || empty($modules)) {
             return '';
         }
 
@@ -68,8 +74,8 @@ class Widgets
         }
 
         $res = '';
-        foreach ($names as $k => $v) {
-            if ($k == dcCore::app()->public->theme) {
+        foreach ($modules as $id => $module) {
+            if ($id == dcCore::app()->public->theme) {
                 $format = $model['a_html'];
             } else {
                 $format = $model['e_html'];
@@ -78,21 +84,21 @@ class Widgets
             if ($replace) {
                 $e_url = preg_replace(
                     '/(\\?|&)(theme\\=)([^&]*)/',
-                    '$1${2}' . addcslashes($k, '$\\'),
-                    $e_url
+                    '$1${2}' . addcslashes($id, '$\\'),
+                    (string) $e_url
                 );
                 $val = '';
             } else {
-                $val = Html::escapeHTML(rawurlencode($k));
+                $val = Html::escapeHTML(rawurlencode($id));
             }
             $res .= sprintf(
                 $format,
                 $e_url,
                 $ext,
                 $val,
-                Html::escapeHTML($v['name']),
-                Html::escapeHTML($v['desc']),
-                Html::escapeHTML($k)
+                Html::escapeHTML($module['name']),
+                Html::escapeHTML($module['desc']),
+                Html::escapeHTML($id)
             );
         }
 
@@ -107,12 +113,5 @@ class Widgets
             '',
             ($w->title ? $w->renderTitle(Html::escapeHTML($w->title)) : '') . sprintf($model['s_html'], $s_url, $res)
         );
-    }
-
-    public static function getNames(): array
-    {
-        $exclude = explode(';', (string) dcCore::app()->blog->settings->get(My::id())->get('exclude'));
-
-        return array_diff_key(dcCore::app()->themes->getDefines(['state' => dcModuleDefine::STATE_ENABLED], true), array_flip($exclude));
     }
 }

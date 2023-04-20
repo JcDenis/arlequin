@@ -43,8 +43,7 @@ class Frontend extends dcNsProcess
 
             # Redirect if needed
             if (isset($_GET['theme'])) {
-                $p = '/(\?|&)theme(=.*)?$/';
-                Http::redirect(preg_replace($p, '', Http::getSelfURI()));
+                Http::redirect((string) preg_replace('/(\?|&)theme(=.*)?$/', '', Http::getSelfURI()));
             }
 
             # Switch theme
@@ -63,6 +62,11 @@ class Frontend extends dcNsProcess
 
     protected static function cookieSuffix(): string
     {
+        // nullsafe PHP < 8.0
+        if (is_null(dcCore::app()->blog)) {
+            return '';
+        }
+
         return base_convert(dcCore::app()->blog->uid, 16, 36);
     }
 
@@ -75,6 +79,11 @@ class Frontend extends dcNsProcess
 
     public static function switchTheme(string $theme): void
     {
+        // nullsafe PHP < 8.0
+        if (is_null(dcCore::app()->blog)) {
+            return;
+        }
+
         if (dcCore::app()->blog->settings->get(My::id())->get('mt_exclude')) {
             if (in_array($theme, explode('/', dcCore::app()->blog->settings->get(My::id())->get('mt_exclude')))) {
                 return;
