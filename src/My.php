@@ -17,11 +17,11 @@ namespace Dotclear\Plugin\arlequin;
 use dcCore;
 
 /**
- * Plugin definitions.
+ * This module definitions.
  */
 class My
 {
-    /** @var string Required php version */
+    /** @var    string  Required php version */
     public const PHP_MIN = '7.4';
 
     /**
@@ -37,11 +37,21 @@ class My
      */
     public static function name(): string
     {
-        return __((string) dcCore::app()->plugins->moduleInfo(self::id(), 'name'));
+        $name = dcCore::app()->plugins->moduleInfo(self::id(), 'name');
+
+        return __(is_string($name) ? $name : self::id());
     }
 
     /**
-     * Check php version.
+     * This module path.
+     */
+    public static function path(): string
+    {
+        return dirname(__DIR__);
+    }
+
+    /**
+     * Check this module PHP version compliant.
      */
     public static function phpCompliant(): bool
     {
