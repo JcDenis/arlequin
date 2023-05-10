@@ -25,7 +25,7 @@ class Frontend extends dcNsProcess
 
     public static function init(): bool
     {
-        static::$init = true;
+        static::$init = defined('DC_RC_PATH');
 
         return static::$init;
     }
