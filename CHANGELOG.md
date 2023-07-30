@@ -1,3 +1,9 @@
+2.2 - 2023.07.30
+* require Dotclear 2.27
+* require PHP 7.4+
+* use new svg icon
+* update to Dotclear 2.27-dev
+
 2.1 - 2023.05.13
 * require Dotclear 2.26
 * fix nullsafe warnings

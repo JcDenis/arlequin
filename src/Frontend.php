@@ -15,24 +15,22 @@ declare(strict_types=1);
 namespace Dotclear\Plugin\arlequin;
 
 use dcCore;
-use dcNsProcess;
+use Dotclear\Core\Process;
 use Dotclear\Helper\Network\Http;
 
-class Frontend extends dcNsProcess
+class Frontend extends Process
 {
     public const COOKIE_THEME_PREFIX = 'dc_theme_';
     public const COOKIE_UPDDT_PREFIX = 'dc_user_upddt_';
 
     public static function init(): bool
     {
-        static::$init = defined('DC_RC_PATH');
-
-        return static::$init;
+        return self::status(My::checkContext(My::FRONTEND));
     }
 
     public static function process(): bool
     {
-        if (!static::$init) {
+        if (!self::status()) {
             return false;
         }
 
@@ -62,11 +60,6 @@ class Frontend extends dcNsProcess
 
     protected static function cookieSuffix(): string
     {
-        // nullsafe PHP < 8.0
-        if (is_null(dcCore::app()->blog)) {
-            return '';
-        }
-
         return base_convert(dcCore::app()->blog->uid, 16, 36);
     }
 
@@ -79,13 +72,8 @@ class Frontend extends dcNsProcess
 
     public static function switchTheme(string $theme): void
     {
-        // nullsafe PHP < 8.0
-        if (is_null(dcCore::app()->blog)) {
-            return;
-        }
-
-        if (dcCore::app()->blog->settings->get(My::id())->get('mt_exclude')) {
-            if (in_array($theme, explode('/', dcCore::app()->blog->settings->get(My::id())->get('mt_exclude')))) {
+        if (My::settings()->get('mt_exclude')) {
+            if (in_array($theme, explode('/', My::settings()->get('mt_exclude')))) {
                 return;
             }
         }

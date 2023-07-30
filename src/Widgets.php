@@ -45,13 +45,8 @@ class Widgets
             return '';
         }
 
-        // nullsafe PHP < 8.0
-        if (is_null(dcCore::app()->blog)) {
-            return '';
-        }
-
-        $model   = json_decode((string) dcCore::app()->blog->settings->get(My::id())->get('model'), true);
-        $exclude = explode(';', (string) dcCore::app()->blog->settings->get(My::id())->get('exclude'));
+        $model   = json_decode((string) My::settings()->get('model'), true);
+        $exclude = explode(';', (string) My::settings()->get('exclude'));
         $modules = array_diff_key(dcCore::app()->themes->getDefines(['state' => dcModuleDefine::STATE_ENABLED], true), array_flip($exclude));
         if (!is_array($model) || empty($modules)) {
             return '';

@@ -16,8 +16,11 @@ namespace Dotclear\Plugin\arlequin;
 
 use ArrayObject;
 use dcCore;
-use dcNsProcess;
-use dcPage;
+use Dotclear\Core\Process;
+use Dotclear\Core\Backend\{
+    Notices,
+    Page
+};
 use Dotclear\Helper\Html\Form\{
     Div,
     Form,
@@ -32,32 +35,21 @@ use Dotclear\Helper\Html\Form\{
 use Dotclear\Helper\Html\Html;
 use Exception;
 
-class Manage extends dcNsProcess
+class Manage extends Process
 {
     public static function init(): bool
     {
-        static::$init = defined('DC_CONTEXT_ADMIN')
-            && !is_null(dcCore::app()->auth) && !is_null(dcCore::app()->blog) // nullsafe PHP < 8.0
-            && dcCore::app()->auth->check(dcCore::app()->auth->makePermissions([
-                dcCore::app()->auth::PERMISSION_CONTENT_ADMIN,
-            ]), dcCore::app()->blog->id);
-
-        return static::$init;
+        return self::status(My::checkContext(My::MANAGE));
     }
 
     public static function process(): bool
     {
-        if (!static::$init) {
-            return false;
-        }
-
-        // nullsafe PHP < 8.0
-        if (is_null(dcCore::app()->auth) || is_null(dcCore::app()->blog) || is_null(dcCore::app()->adminurl)) {
+        if (!self::status()) {
             return false;
         }
 
         try {
-            $s = dcCore::app()->blog->settings->get(My::id());
+            $s = My::settings();
 
             $model   = json_decode((string) $s->get('model'), true);
             $exclude = $s->get('exclude');
@@ -69,7 +61,7 @@ class Manage extends dcNsProcess
                 $s->put('model', json_encode($model), 'string', 'Arlequin configuration');
                 $s->put('exclude', 'customCSS', 'string', 'Excluded themes');
 
-                dcPage::AddSuccessNotice(__('Settings have been reinitialized.'));
+                Notices::AddSuccessNotice(__('Settings have been reinitialized.'));
                 dcCore::app()->blog->triggerBlog();
             }
 
@@ -86,9 +78,9 @@ class Manage extends dcNsProcess
                 $s->put('model', json_encode($model));
                 $s->put('exclude', $exclude);
 
-                dcPage::AddSuccessNotice(__('System settings have been updated.'));
+                Notices::AddSuccessNotice(__('System settings have been updated.'));
                 dcCore::app()->blog->triggerBlog();
-                dcCore::app()->adminurl->redirect('admin.plugin.' . My::id(), ['config' => 1]);
+                My::redirect(['config' => 1]);
             }
 
             // restore settings
@@ -96,9 +88,9 @@ class Manage extends dcNsProcess
                 $s->drop('model');
                 $s->drop('exclude');
 
-                dcPage::AddSuccessNotice(__('Settings have been reinitialized.'));
+                Notices::AddSuccessNotice(__('Settings have been reinitialized.'));
                 dcCore::app()->blog->triggerBlog();
-                dcCore::app()->adminurl->redirect('admin.plugin.' . My::id(), ['restore' => 1]);
+                My::redirect(['restore' => 1]);
             }
         } catch (Exception $e) {
             dcCore::app()->error->add($e->getMessage());
@@ -109,12 +101,7 @@ class Manage extends dcNsProcess
 
     public static function render(): void
     {
-        if (!static::$init) {
-            return;
-        }
-
-        // nullsafe PHP < 8.0
-        if (is_null(dcCore::app()->blog) || is_null(dcCore::app()->adminurl)) {
+        if (!self::status()) {
             return;
         }
 
@@ -123,7 +110,7 @@ class Manage extends dcNsProcess
         dcCore::app()->callBehavior('arlequinAddModels', $models);
 
         $models = iterator_to_array($models);
-        $s      = dcCore::app()->blog->settings->get(My::id());
+        $s      = My::settings();
         $model  = json_decode((string) $s->get('model'), true);
         $model  = array_merge(My::defaultModel(), is_array($model) ? $model : []);
         $header = '';
@@ -139,9 +126,9 @@ class Manage extends dcNsProcess
                 ");\n";
         }
 
-        dcPage::openModule(
+        Page::openModule(
             My::name(),
-            dcPage::jsModuleLoad(My::id() . '/js/models.js') . '
+            Page::jsLoad('models') . '
             <script type="text/javascript">
             //<![CDATA[
             arlequin.msg.predefined_models = "' . Html::escapeJS(__('Predefined models')) . '";
@@ -156,13 +143,13 @@ class Manage extends dcNsProcess
         );
 
         echo
-        dcPage::breadcrumb([
+        Page::breadcrumb([
             Html::escapeHTML(dcCore::app()->blog->name) => '',
             My::name()                                  => '',
         ]) .
-        dcPage::notices() .
+        Notices::getNotices() .
 
-        (new Form(My::id() . 'form'))->method('post')->action(dcCore::app()->adminurl->get('admin.plugin.' . My::id()))->fields([
+        (new Form(My::id() . 'form'))->method('post')->action(dcCore::app()->admin->getPageURL())->fields([
             (new Text('h4', __('Switcher display format'))),
             (new Div())->id('models'),
             (new Div())->class('two-boxes odd')->items([
@@ -189,13 +176,13 @@ class Manage extends dcNsProcess
                 (new Note())->class('form-note')->text('Semicolon separated list of themes IDs (theme folder name). Ex: ductile;berlin'),
             ]),
             (new Para())->separator(' ')->items([
-                dcCore::app()->formNonce(false),
                 (new Submit(['mt_action_config']))->value(__('Save')),
                 (new Submit(['mt_action_restore']))->value(__('Restore defaults')),
+                ... My::hiddenFields(),
             ]),
         ])->render();
 
-        dcPage::helpBlock('arlequin');
-        dcPage::closeModule();
+        Page::helpBlock('arlequin');
+        Page::closeModule();
     }
 }
