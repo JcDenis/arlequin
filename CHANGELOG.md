@@ -1,3 +1,9 @@
+arlequin 2.3 - 2023.08.06
+===========================================================
+* require Dotclear 2.27
+* require PHP 7.4+
+* move third party repository
+
 2.2 - 2023.07.30
 * require Dotclear 2.27
 * require PHP 7.4+
