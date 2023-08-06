@@ -4,44 +4,53 @@ arlequin 2.3 - 2023.08.06
 * require PHP 7.4+
 * move third party repository
 
-2.2 - 2023.07.30
+arlequin 2.2 - 2023.07.30
+===========================================================
 * require Dotclear 2.27
 * require PHP 7.4+
 * use new svg icon
 * update to Dotclear 2.27-dev
 
-2.1 - 2023.05.13
+arlequin 2.1 - 2023.05.13
+===========================================================
 * require Dotclear 2.26
 * fix nullsafe warnings
 * add plugin Uninstaller features
 
-2.0 - 2023.04.11
+arlequin 2.0 - 2023.04.11
+===========================================================
 * require Dotclear 2.26
 * use namespace
 * add behavior to register models
 * move settings names (lost previously saved)
 * move models (lost previously saved)
 
-1.6 - 2022.12.14
+arlequin 1.6 - 2022.12.14
+===========================================================
 * Update to dotclear 2.24
 
-1.5 - 2021.09.16 Pierre Van Glabeke
+arlequin 1.5 - 2021.09.16 Pierre Van Glabeke
+===========================================================
 * champs rallongés
 
-1.4 - 2021.09.15 - Pierre Van Glabeke
+arlequin 1.4 - 2021.09.15 - Pierre Van Glabeke
+===========================================================
 * correction bug affichage dc2.19
 * dc2.19 requis
 
-1.3 - 2018.01.21 - Pierre Van Glabeke
+arlequin 1.3 - 2018.01.21 - Pierre Van Glabeke
+===========================================================
 * modif setting
 * modif index
 * modif localisation
 
 1.2 - 2.16.06.12 - Pierre Van Glabeke
+===========================================================
 * ajout code sécu resources.php
 * modif intitulé dans admin
 
 1.1 - 2.15.03.05 - Pierre Van Glabeke
+===========================================================
 * compatibilité dc2.7
 * cosmétique dc2.6
 * localisation
