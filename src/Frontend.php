@@ -72,6 +72,10 @@ class Frontend extends Process
 
     public static function switchTheme(string $theme): void
     {
+        if (dcCore::app()->blog->settings->get('system')->get('theme') == $theme) {
+            return;
+        }
+
         if (My::settings()->get('mt_exclude')) {
             if (in_array($theme, explode('/', My::settings()->get('mt_exclude')))) {
                 return;
