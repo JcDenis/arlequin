@@ -1,10 +1,10 @@
 # README
 
-[![Release](https://img.shields.io/badge/release-2.3-a2cbe9.svg)](https://git.dotclear.watch/JcDenis/arlequin/releases)
-![Date](https://img.shields.io/badge/date-2023.08.07-c44d58.svg)]
+[![Release](https://img.shields.io/badge/release-2.4-a2cbe9.svg)](https://git.dotclear.watch/JcDenis/arlequin/releases)
+![Date](https://img.shields.io/badge/date-2023.09.04-c44d58.svg)]
 [![Dotclear](https://img.shields.io/badge/dotclear-v2.27-137bbb.svg)](https://fr.dotclear.org/download)
 [![Dotaddict](https://img.shields.io/badge/dotaddict-official-9ac123.svg)](https://plugins.dotaddict.org/dc2/details/arlequin)
-[![License](https://img.shields.io/badge/license-GPL--2.0-ececec.svg)](https://git.dotclear.watch/JcDenis/arlequin/blob/master/LICENSE)
+[![License](https://img.shields.io/badge/license-GPL--2.0-ececec.svg)](https://git.dotclear.watch/JcDenis/arlequin/src/branch/master/LICENSE)
 
 ## ABOUT
 
@@ -14,9 +14,9 @@ _arlequin_ is a plugin for the open-source web publishing software called [Dotcl
 
 ## REQUIREMENTS
 
+* Dotclear content admin permissions to manage theme and public menu
 * Dotclear 2.27
 * PHP 7.4+
-* Dotclear content admin permission to manage theme and public menu
 
 ## USAGE
 
@@ -29,11 +29,11 @@ you should also add widget to allow visitor to select a theme.
 
 ## LINKS
 
-* [License](https://git.dotclear.watch/JcDenis/arlequin/blob/master/LICENSE)
+* [License](https://git.dotclear.watch/JcDenis/arlequin/src/branch/master/LICENSE)
 * [Packages & details](https://git.dotclear.watch/JcDenis/arlequin/releases) (or on [Dotaddict](https://plugins.dotaddict.org/dc2/details/arlequin))
 * [Sources & contributions](https://git.dotclear.watch/JcDenis/arlequin) (or on [GitHub](https://github.com/JcDenis/arlequin))
 * [Issues & security](https://git.dotclear.watch/JcDenis/arlequin/issues) (or on [GitHub](https://github.com/JcDenis/arlequin/issues))
-* [Discuss and help](http://forum.dotclear.org/viewtopic.php?id=48345)
+* [Discuss & help](http://forum.dotclear.org/viewtopic.php?id=48345)
 
 ## CONTRIBUTORS
 

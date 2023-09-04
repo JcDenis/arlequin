@@ -18,7 +18,7 @@ $this->registerModule(
     'Arlequin',
     'Allows visitors choose a theme',
     'Oleksandr Syenchuk, Pierre Van Glabeke and contributors',
-    '2.3',
+    '2.4',
     [
         'requires'    => [['core', '2.27']],
         'permissions' => dcCore::app()->auth->makePermissions([

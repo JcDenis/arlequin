@@ -1,3 +1,11 @@
+arlequin 2.4 - 2023.09.04
+===========================================================
+* Require Dotclear 2.27
+* Require PHP 7.4+
+* Fix crash on theme preview
+* Use dotclear style for CHANGELOG
+* Update README
+
 arlequin 2.3 - 2023.08.06
 ===========================================================
 * require Dotclear 2.27

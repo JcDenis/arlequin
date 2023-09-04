@@ -2,10 +2,10 @@
 <modules xmlns:da="http://dotaddict.org/da/">
   <module id="arlequin">
     <name>Arlequin</name>
-    <version>2.3</version>
+    <version>2.4</version>
     <author>Oleksandr Syenchuk, Pierre Van Glabeke and contributors</author>
     <desc>Allows visitors choose a theme</desc>
-    <file>https://git.dotclear.watch/JcDenis/arlequin/releases/download/v2.3/plugin-arlequin.zip</file>
+    <file>https://git.dotclear.watch/JcDenis/arlequin/releases/download/v2.4/plugin-arlequin.zip</file>
     <da:dcmin>2.27</da:dcmin>
     <da:details>https://git.dotclear.watch/JcDenis/arlequin/src/branch/master/README.md</da:details>
     <da:support>https://git.dotclear.watch/JcDenis/arlequin/issues</da:support>
