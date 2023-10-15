@@ -1,26 +1,24 @@
 <?php
-/**
- * @brief arlequin, a plugin for Dotclear 2
- *
- * @package Dotclear
- * @subpackage Plugin
- *
- * @author Oleksandr Syenchuk, Pierre Van Glabeke and contributors
- *
- * @copyright Jean-Christian Denis
- * @copyright GPL-2.0 https://www.gnu.org/licenses/gpl-2.0.html
- */
+
 declare(strict_types=1);
 
 namespace Dotclear\Plugin\arlequin;
 
-use dcCore;
-use dcModuleDefine;
+use Dotclear\App;
 use Dotclear\Helper\Html\Html;
 use Dotclear\Helper\Network\Http;
+use Dotclear\Module\ModuleDefine;
 use Dotclear\Plugin\widgets\WidgetsStack;
 use Dotclear\Plugin\widgets\WidgetsElement;
 
+/**
+ * @brief       arlequin frontend class.
+ * @ingroup     arlequin
+ *
+ * @author      Oleksandr Syenchuk (author)
+ * @author      Jean-Christian Denis (latest)
+ * @copyright   GPL-2.0 https://www.gnu.org/licenses/gpl-2.0.html
+ */
 class Widgets
 {
     public static function initWidgets(WidgetsStack $w): void
@@ -28,7 +26,7 @@ class Widgets
         $w->create(
             'arlequin',
             My::name(),
-            [self::class,'parseWidget'],
+            self::parseWidget(...),
             null,
             __('Theme switcher')
         )
@@ -41,13 +39,13 @@ class Widgets
 
     public static function parseWidget(WidgetsElement $w): string
     {
-        if ($w->offline || !$w->checkHomeOnly(dcCore::app()->url->type)) {
+        if ($w->offline || !$w->checkHomeOnly(App::url()->type)) {
             return '';
         }
 
         $model   = json_decode((string) My::settings()->get('model'), true);
         $exclude = explode(';', (string) My::settings()->get('exclude'));
-        $modules = array_diff_key(dcCore::app()->themes->getDefines(['state' => dcModuleDefine::STATE_ENABLED], true), array_flip($exclude));
+        $modules = array_diff_key(App::themes()->getDefines(['state' => ModuleDefine::STATE_ENABLED], true), array_flip($exclude));
         if (!is_array($model) || empty($modules)) {
             return '';
         }
@@ -70,7 +68,8 @@ class Widgets
 
         $res = '';
         foreach ($modules as $id => $module) {
-            if ($id == dcCore::app()->public->theme) {
+            $id = (string) $id;
+            if ($id == App::frontend()->theme) {
                 $format = $model['a_html'];
             } else {
                 $format = $model['e_html'];

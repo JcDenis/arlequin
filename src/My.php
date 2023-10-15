@@ -1,34 +1,32 @@
 <?php
-/**
- * @brief arlequin, a plugin for Dotclear 2
- *
- * @package Dotclear
- * @subpackage Plugin
- *
- * @author Oleksandr Syenchuk, Pierre Van Glabeke and contributors
- *
- * @copyright Jean-Christian Denis
- * @copyright GPL-2.0 https://www.gnu.org/licenses/gpl-2.0.html
- */
+
 declare(strict_types=1);
 
 namespace Dotclear\Plugin\arlequin;
 
-use dcCore;
+use Dotclear\App;
 use Dotclear\Module\MyPlugin;
 
 /**
- * This module definitions.
+ * @brief       arlequin My helper.
+ * @ingroup     arlequin
+ *
+ * @author      Oleksandr Syenchuk (author)
+ * @author      Jean-Christian Denis (latest)
+ * @copyright   GPL-2.0 https://www.gnu.org/licenses/gpl-2.0.html
  */
 class My extends MyPlugin
 {
     public static function checkCustomContext(int $context): ?bool
     {
-        return !in_array($context, [My::BACKEND, My::MANAGE, My::MENU]) ? null :
-            defined('DC_CONTEXT_ADMIN')
-            && dcCore::app()->auth->check(dcCore::app()->auth->makePermissions([
-                dcCore::app()->auth::PERMISSION_CONTENT_ADMIN,
-            ]), dcCore::app()->blog->id);
+        return match ($context) {
+            self::BACKEND, self::MANAGE, self::MENU => App::task()->checkContext('BACKEND')
+                && App::auth()->check(App::auth()->makePermissions([
+                    App::auth()::PERMISSION_CONTENT_ADMIN,
+                ]), App::blog()->id()),
+
+            default => null,
+        };
     }
 
     /**
@@ -41,6 +39,8 @@ class My extends MyPlugin
      *      'e_html'=>'[HTML code]',    // Code HTML d'un item pouvant être sélectionné
      *      'a_html'=>'[HTML code]'     // Code HTML d'un item actif (thème sélectionné)
      *  ]
+     *
+     * @return  array<int, array<string, string>>
      */
     public static function distributedModels(): array
     {
@@ -65,6 +65,11 @@ class My extends MyPlugin
         ];
     }
 
+    /**
+     * Get default models.
+     *
+     * @return  array<string, string>
+     */
     public static function defaultModel(): array
     {
         return [

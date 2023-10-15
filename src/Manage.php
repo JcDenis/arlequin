@@ -1,21 +1,11 @@
 <?php
-/**
- * @brief arlequin, a plugin for Dotclear 2
- *
- * @package Dotclear
- * @subpackage Plugin
- *
- * @author Oleksandr Syenchuk, Pierre Van Glabeke and contributors
- *
- * @copyright Jean-Christian Denis
- * @copyright GPL-2.0 https://www.gnu.org/licenses/gpl-2.0.html
- */
+
 declare(strict_types=1);
 
 namespace Dotclear\Plugin\arlequin;
 
 use ArrayObject;
-use dcCore;
+use Dotclear\App;
 use Dotclear\Core\Process;
 use Dotclear\Core\Backend\{
     Notices,
@@ -35,6 +25,14 @@ use Dotclear\Helper\Html\Form\{
 use Dotclear\Helper\Html\Html;
 use Exception;
 
+/**
+ * @brief       arlequin manage class.
+ * @ingroup     arlequin
+ *
+ * @author      Oleksandr Syenchuk (author)
+ * @author      Jean-Christian Denis (latest)
+ * @copyright   GPL-2.0 https://www.gnu.org/licenses/gpl-2.0.html
+ */
 class Manage extends Process
 {
     public static function init(): bool
@@ -62,7 +60,7 @@ class Manage extends Process
                 $s->put('exclude', 'customCSS', 'string', 'Excluded themes');
 
                 Notices::AddSuccessNotice(__('Settings have been reinitialized.'));
-                dcCore::app()->blog->triggerBlog();
+                App::blog()->triggerBlog();
             }
 
             // collect settings
@@ -79,7 +77,7 @@ class Manage extends Process
                 $s->put('exclude', $exclude);
 
                 Notices::AddSuccessNotice(__('System settings have been updated.'));
-                dcCore::app()->blog->triggerBlog();
+                App::blog()->triggerBlog();
                 My::redirect(['config' => 1]);
             }
 
@@ -89,11 +87,11 @@ class Manage extends Process
                 $s->drop('exclude');
 
                 Notices::AddSuccessNotice(__('Settings have been reinitialized.'));
-                dcCore::app()->blog->triggerBlog();
+                App::blog()->triggerBlog();
                 My::redirect(['restore' => 1]);
             }
         } catch (Exception $e) {
-            dcCore::app()->error->add($e->getMessage());
+            App::error()->add($e->getMessage());
         }
 
         return true;
@@ -107,7 +105,7 @@ class Manage extends Process
 
         $models = new ArrayObject(My::distributedModels());
 
-        dcCore::app()->callBehavior('arlequinAddModels', $models);
+        App::behavior()->callBehavior('arlequinAddModels', $models);
 
         $models = iterator_to_array($models);
         $s      = My::settings();
@@ -144,12 +142,12 @@ class Manage extends Process
 
         echo
         Page::breadcrumb([
-            Html::escapeHTML(dcCore::app()->blog->name) => '',
-            My::name()                                  => '',
+            Html::escapeHTML(App::blog()->name()) => '',
+            My::name()                            => '',
         ]) .
         Notices::getNotices() .
 
-        (new Form(My::id() . 'form'))->method('post')->action(dcCore::app()->admin->getPageURL())->fields([
+        (new Form(My::id() . 'form'))->method('post')->action(App::backend()->getPageURL())->fields([
             (new Text('h4', __('Switcher display format'))),
             (new Div())->id('models'),
             (new Div())->class('two-boxes odd')->items([
