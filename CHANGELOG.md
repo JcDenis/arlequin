@@ -1,3 +1,11 @@
+arlequin 2.5.1 - 2023.11.04
+===========================================================
+* Require Dotclear 2.28
+* Require PHP 8.1
+* Use last minute Dotclear 2.28 changes
+* Fix typo
+* Fix permissions
+
 arlequin 2.5 - 2023.10.15
 ===========================================================
 * Require Dotclear 2.28

@@ -43,7 +43,7 @@ class Backend extends Process
                     ]),
                 ]);
             },
-            #            'initWidgets' => Widgets::initWidgets(...),
+            'initWidgets' => Widgets::initWidgets(...),
         ]);
 
         return true;

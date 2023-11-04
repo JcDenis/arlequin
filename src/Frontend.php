@@ -61,7 +61,7 @@ class Frontend extends Process
 
         App::behavior()->addBehaviors([
             'publicBeforeDocumentV2' => self::adjustCache(...),
-            #            'initWidgets'            => Widgets::initWidgets(...),
+            'initWidgets'            => Widgets::initWidgets(...),
         ]);
 
         return true;
