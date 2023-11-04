@@ -159,17 +159,17 @@ class Manage extends Process
             (new Div())->class('two-boxes even')->items([
                 (new Para())->items([
                     (new Label(__('Item HTML code:'), Label::OUTSIDE_LABEL_BEFORE))->for('e_html'),
-                    (new Input('e_html'))->size(50)->maxlenght(200)->value(Html::escapeHTML($model['e_html'])),
+                    (new Input('e_html'))->size(50)->maxlength(200)->value(Html::escapeHTML($model['e_html'])),
                 ]),
                 (new Para())->items([
                     (new Label(__('Active item HTML code:'), Label::OUTSIDE_LABEL_BEFORE))->for('a_html'),
-                    (new Input('a_html'))->size(50)->maxlenght(200)->value(Html::escapeHTML($model['a_html'])),
+                    (new Input('a_html'))->size(50)->maxlength(200)->value(Html::escapeHTML($model['a_html'])),
                 ]),
             ]),
             (new Div())->class('two-boxes odd')->items([
                 (new Para())->items([
                     (new Label(__('Excluded themes:'), Label::OUTSIDE_LABEL_BEFORE))->for('exclude'),
-                    (new Input('exclude'))->size(50)->maxlenght(200)->value(Html::escapeHTML($s->get('exclude'))),
+                    (new Input('exclude'))->size(50)->maxlength(200)->value(Html::escapeHTML($s->get('exclude'))),
                 ]),
                 (new Note())->class('form-note')->text('Semicolon separated list of themes IDs (theme folder name). Ex: ductile;berlin'),
             ]),
