@@ -75,7 +75,7 @@ class Frontend extends Process
     public static function adjustCache(): void
     {
         if (!empty($_COOKIE[self::COOKIE_UPDDT_PREFIX . self::cookieSuffix()])) {
-            App::frontend()->cache()->addTime((int) $_COOKIE[self::COOKIE_UPDDT_PREFIX . self::cookieSuffix()]);
+            App::cache()->addTime((int) $_COOKIE[self::COOKIE_UPDDT_PREFIX . self::cookieSuffix()]);
         }
     }
 
