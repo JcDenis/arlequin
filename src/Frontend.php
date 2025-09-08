@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dotclear\Plugin\arlequin;
 
 use Dotclear\App;
-use Dotclear\Core\Process;
+use Dotclear\Helper\Process\TraitProcess;
 use Dotclear\Helper\Network\Http;
 
 /**
@@ -16,8 +16,10 @@ use Dotclear\Helper\Network\Http;
  * @author      Jean-Christian Denis (latest)
  * @copyright   GPL-2.0 https://www.gnu.org/licenses/gpl-2.0.html
  */
-class Frontend extends Process
+class Frontend
 {
+    use TraitProcess;
+
     /**
      * The arlequin theme cookie.
      *
