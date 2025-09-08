@@ -61,7 +61,7 @@ class Manage
                 $s->put('model', json_encode($model), 'string', 'Arlequin configuration');
                 $s->put('exclude', 'customCSS', 'string', 'Excluded themes');
 
-                Notices::AddSuccessNotice(__('Settings have been reinitialized.'));
+                Notices::addSuccessNotice(__('Settings have been reinitialized.'));
                 App::blog()->triggerBlog();
             }
 
@@ -78,7 +78,7 @@ class Manage
                 $s->put('model', json_encode($model));
                 $s->put('exclude', $exclude);
 
-                Notices::AddSuccessNotice(__('System settings have been updated.'));
+                Notices::addSuccessNotice(__('System settings have been updated.'));
                 App::blog()->triggerBlog();
                 My::redirect(['config' => 1]);
             }
@@ -88,7 +88,7 @@ class Manage
                 $s->drop('model');
                 $s->drop('exclude');
 
-                Notices::AddSuccessNotice(__('Settings have been reinitialized.'));
+                Notices::addSuccessNotice(__('Settings have been reinitialized.'));
                 App::blog()->triggerBlog();
                 My::redirect(['restore' => 1]);
             }
