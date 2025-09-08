@@ -18,7 +18,7 @@ $this->registerModule(
     'Arlequin',
     'Allows visitors choose a theme',
     'Oleksandr Syenchuk, Pierre Van Glabeke and contributors',
-    '2.6',
+    '2.36',
     [
         'requires'    => [['core', '2.36']],
         'permissions' => 'My',
@@ -26,6 +26,6 @@ $this->registerModule(
         'support'     => 'https://github.com/JcDenis/' . $this->id . '/issues',
         'details'     => 'https://github.com/JcDenis/' . $this->id . '/',
         'repository'  => 'https://raw.githubusercontent.com/JcDenis/' . $this->id . '/master/dcstore.xml',
-        'date'        => '2025-03-02T09:06:01+00:00',
+        'date'        => '2025-09-08T18:29:27+00:00',
     ]
 );
