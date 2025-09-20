@@ -87,6 +87,8 @@ class Frontend
             return;
         }
 
+        App::cache()->setAvoidCache(true);
+
         if (My::settings()->get('mt_exclude')) {
             if (in_array($theme, explode('/', My::settings()->get('mt_exclude')))) {
                 return;
