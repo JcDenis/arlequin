@@ -122,8 +122,8 @@ class Frontend
             return;
         }
 
-        $current = App::blog()->settings()->get('system')->get('theme');
-        if (is_string($current) && $current === $theme) {
+        $current = App::blog()->settings()->get('system')->getStr('theme', false);
+        if ($current === $theme) {
             return;
         }
 
