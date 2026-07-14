@@ -14,7 +14,7 @@
  */
 declare(strict_types=1);
 
-if (!is_object($this) || !method_exists($this, 'registerModule') || !isset($this->id) || !is_string($this->id)) {
+if (!isset($this) || !is_object($this) || !method_exists($this, 'registerModule') || !isset($this->id) || !is_string($this->id)) {
     return;
 }
 
@@ -24,7 +24,7 @@ $this->registerModule(
     'Oleksandr Syenchuk, Pierre Van Glabeke and contributors',
     '2.37',
     [
-        'requires'    => [['core', '2.37']],
+        'requires'    => [['core', '2.39']],
         'permissions' => 'My',
         'type'        => 'plugin',
         'support'     => 'https://github.com/JcDenis/' . $this->id . '/issues',

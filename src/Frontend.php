@@ -104,15 +104,10 @@ class Frontend
 
     public static function switchTheme(?string $theme = null): void
     {
-        /**
-         * @var BlogWorkspaceInterface
-         */
-        $settings = My::settings();
-
         if ($theme === null || $theme === '') {
             // Restore original theme if any
-            $original = $settings->get('original');
-            if (is_string($original) && $original !== '') {
+            $original = My::settings()->getStr('original', false);
+            if ($original !== '') {
                 // Restore initial theme
                 App::cache()->setAvoidCache(true);
                 App::blog()->settings()->get('system')->set('theme', $original);
@@ -122,25 +117,25 @@ class Frontend
             return;
         }
 
-        $current = App::blog()->settings()->get('system')->get('theme');
-        if (is_string($current) && $current === $theme) {
+        $current = App::blog()->settings()->get('system')->getStr('theme', false);
+        if ($current === $theme) {
             return;
         }
 
         // Check if theme is not excluded
-        if ($settings->get('mt_exclude')) {
-            $excluded = is_string($excluded = $settings->get('mt_exclude')) ? $excluded : '';
+        if (My::settings()->getStr('mt_exclude', false) !== '') {
+            $excluded = My::settings()->getStr('mt_exclude', false);
             if (in_array($theme, explode(';', $excluded))) {
                 return;
             }
         }
 
         // Save original theme
-        $settings->put('original', $current);
+        My::settings()->put('original', $current);
 
         // Switch to temporary theme
         App::cache()->setAvoidCache(true);
         App::blog()->settings()->get('system')->set('theme', $theme);
-        App::frontend()->theme = $theme;
+        App::frontend()->__set('theme', $theme);
     }
 }

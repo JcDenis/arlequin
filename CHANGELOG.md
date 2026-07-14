@@ -1,3 +1,8 @@
+arlequin 2.xx - xxxx.xx.xx
+===========================================================
+* Bump Dotclear from 2.37 to 2.39
+* Code review (phpstan max)
+
 arlequin 2.37 - 2026.05.08
 ===========================================================
 * Bump Dotclear from 2.28 to 2.37

@@ -15,7 +15,7 @@ _arlequin_ is a plugin for the open-source web publishing software called [Dotcl
 
 ## REQUIREMENTS
 
-* Dotclear 2.37
+* Dotclear 2.39
 * PHP 8.1+
 * Dotclear content admin permissions to manage theme and public menu
 
