@@ -46,20 +46,18 @@ class Manage
         }
 
         try {
-            $settings = My::settings();
-
             /**
              * @var array{name?: string, s_html?: string, e_html?: string, a_html?: string} $model
              */
-            $model = is_string($model = $settings->get('model')) ? json_decode($model, true) : [];
+            $model = json_decode(My::settings()->getStr('model', false), true);
 
-            $exclude = $settings->get('exclude');
+            $exclude = My::settings()->getStr('exclude');
 
             // initialize settings
             if ($model === [] || $exclude === null || !(isset($model['e_html']) && isset($model['a_html']) && isset($model['s_html']))) {
                 $model = My::defaultModel();
-                $settings->put('model', json_encode($model), BlogWorkspaceInterface::NS_STRING, 'Arlequin configuration');
-                $settings->put('exclude', 'customCSS', BlogWorkspaceInterface::NS_STRING, 'Excluded themes');
+                My::settings()->put('model', json_encode($model), BlogWorkspaceInterface::NS_STRING, 'Arlequin configuration');
+                My::settings()->put('exclude', 'customCSS', BlogWorkspaceInterface::NS_STRING, 'Excluded themes');
 
                 Notices::addSuccessNotice(__('Settings have been reinitialized.'));
                 App::blog()->triggerBlog();
@@ -75,8 +73,8 @@ class Manage
 
             // save settings
             if (isset($_POST['mt_action_config'])) {
-                $settings->put('model', json_encode($model), BlogWorkspaceInterface::NS_STRING);
-                $settings->put('exclude', $exclude, BlogWorkspaceInterface::NS_STRING);
+                My::settings()->put('model', json_encode($model), BlogWorkspaceInterface::NS_STRING);
+                My::settings()->put('exclude', $exclude, BlogWorkspaceInterface::NS_STRING);
 
                 Notices::addSuccessNotice(__('System settings have been updated.'));
                 App::blog()->triggerBlog();
@@ -85,8 +83,8 @@ class Manage
 
             // restore settings
             if (isset($_POST['mt_action_restore'])) {
-                $settings->drop('model');
-                $settings->drop('exclude');
+                My::settings()->drop('model');
+                My::settings()->drop('exclude');
 
                 Notices::addSuccessNotice(__('Settings have been reinitialized.'));
                 App::blog()->triggerBlog();
@@ -129,14 +127,12 @@ class Manage
             ];
         }
 
-        $settings = My::settings();
-
-        $excluded = is_string($excluded = $settings->get('exclude')) ? $excluded : '';
+        $excluded = My::settings()->getStr('exclude', false);
 
         /**
          * @var array{name?: string, s_html?: string, e_html?: string, a_html?: string} $model
          */
-        $model = is_string($model = $settings->get('model')) ? json_decode($model, true) : [];
+        $model = json_decode(My::settings()->getStr('model', false), true);
 
         if ($model === []) {
             $model = My::defaultModel();
