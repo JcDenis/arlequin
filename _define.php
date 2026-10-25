@@ -25,7 +25,7 @@ $this->registerModule(
     'Oleksandr Syenchuk, Pierre Van Glabeke and contributors',
     '2.38',
     [
-        'requires'    => [['core', '2.39']],
+        'requires'    => [['core', '2.40']],
         'permissions' => 'My',
         'type'        => 'plugin',
         'support'     => 'https://github.com/JcDenis/' . $this->id . '/issues',
