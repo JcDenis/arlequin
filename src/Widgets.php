@@ -95,12 +95,12 @@ class Widgets
             if ($replace) {
                 $e_url = preg_replace(
                     '/(\\?|&)(theme\\=)([^&]*)/',
-                    '$1${2}' . addcslashes((string) $id, '$\\'),
+                    '$1${2}' . addcslashes($id, '$\\'),
                     (string) $e_url
                 );
                 $val = '';
             } else {
-                $val = Html::escapeHTML(rawurlencode((string) $id));
+                $val = Html::escapeHTML(rawurlencode($id));
             }
 
             $name = isset($themes[$id]['name']) && is_string($name = $themes[$id]['name']) ? $name : '';
