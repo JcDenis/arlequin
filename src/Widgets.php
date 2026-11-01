@@ -77,7 +77,7 @@ class Widgets
         $e_url = $s_url;
 
         # If theme setting is already present in URL, we will replace its value
-        $replace = preg_match('/(\\?|&)theme\\=[^&]*/', $e_url);
+        $replace = (bool) preg_match('/(\\?|&)theme\\=[^&]*/', $e_url);
 
         # URI extension to send theme setting by query string
         if ($replace) {
