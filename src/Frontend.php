@@ -7,7 +7,6 @@ namespace Dotclear\Plugin\arlequin;
 use Dotclear\App;
 use Dotclear\Helper\Process\TraitProcess;
 use Dotclear\Helper\Network\Http;
-use Dotclear\Interface\Core\BlogWorkspaceInterface;
 
 /**
  * @brief       arlequin frontend class.
@@ -91,7 +90,7 @@ class Frontend
 
     protected static function cookieSuffix(): string
     {
-        return base_convert((string) App::blog()->uid(), 16, 36);
+        return base_convert(App::blog()->uid(), 16, 36);
     }
 
     public static function adjustCache(): void
@@ -125,7 +124,7 @@ class Frontend
         // Check if theme is not excluded
         if (My::settings()->getStr('mt_exclude', false) !== '') {
             $excluded = My::settings()->getStr('mt_exclude', false);
-            if (in_array($theme, explode(';', $excluded))) {
+            if (in_array($theme, explode(';', $excluded), true)) {
                 return;
             }
         }

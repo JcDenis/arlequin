@@ -39,7 +39,11 @@ class Widgets
 
     public static function parseWidget(WidgetsElement $w): string
     {
-        if ($w->offline || !$w->checkHomeOnly(App::url()->getType())) {
+        if ($w->isOffline()) {
+            return '';
+        }
+
+        if (!$w->checkHomeOnly(App::url()->getType())) {
             return '';
         }
 
@@ -70,7 +74,7 @@ class Widgets
         $e_url = $s_url;
 
         # If theme setting is already present in URL, we will replace its value
-        $replace = preg_match('/(\\?|&)theme\\=[^&]*/', $e_url);
+        $replace = (bool) preg_match('/(\\?|&)theme\\=[^&]*/', $e_url);
 
         # URI extension to send theme setting by query string
         if ($replace) {
@@ -88,12 +92,12 @@ class Widgets
             if ($replace) {
                 $e_url = preg_replace(
                     '/(\\?|&)(theme\\=)([^&]*)/',
-                    '$1${2}' . addcslashes((string) $id, '$\\'),
+                    '$1${2}' . addcslashes($id, '$\\'),
                     (string) $e_url
                 );
                 $val = '';
             } else {
-                $val = Html::escapeHTML(rawurlencode((string) $id));
+                $val = Html::escapeHTML(rawurlencode($id));
             }
 
             $name = isset($themes[$id]['name']) && is_string($name = $themes[$id]['name']) ? $name : '';
@@ -118,10 +122,10 @@ class Widgets
         }
 
         return $w->renderDiv(
-            (bool) $w->content_only,
-            'arlequin ' . $w->class,
+            $w->getContentOnly(),
+            'arlequin ' . $w->getClass(),
             '',
-            ($w->title ? $w->renderTitle(Html::escapeHTML($w->title)) : '') . sprintf($model['s_html'], $s_url, $res)
+            ($w->getTitle() !== '' ? $w->renderTitle(Html::escapeHTML($w->getTitle())) : '') . sprintf($model['s_html'], $s_url, $res)
         );
     }
 }
