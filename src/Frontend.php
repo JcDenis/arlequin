@@ -122,11 +122,9 @@ class Frontend
         }
 
         // Check if theme is not excluded
-        if (My::settings()->getStr('mt_exclude', false) !== '') {
-            $excluded = My::settings()->getStr('mt_exclude', false);
-            if (in_array($theme, explode(';', $excluded), true)) {
-                return;
-            }
+        $excluded = array_map(trim(...), explode(';', My::settings()->getStr('exclude', false)));
+        if (in_array($theme, $excluded, true)) {
+            return;
         }
 
         // Save original theme
