@@ -22,7 +22,7 @@ $this->registerModule(
     'Arlequin',
     'Allows visitors choose a theme',
     'Oleksandr Syenchuk, Pierre Van Glabeke and contributors',
-    '2.38',
+    '2.39',
     [
         'requires'    => [['core', '2.39']],
         'permissions' => 'My',
