@@ -1,6 +1,7 @@
-arlequin 2.39 - 2026.11.04
+arlequin 2.39.1 - 2026.11.04
 ===========================================================
 * Fix blog switcher model and exclusions
+* Fix browser cache after theme switch (partial)
 
 arlequin 2.38 - 2026.08.12
 ===========================================================
