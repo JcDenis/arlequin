@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Dotclear\Plugin\arlequin;
 
+use ArrayObject;
 use Dotclear\App;
 use Dotclear\Helper\Process\TraitProcess;
 use Dotclear\Helper\Network\Http;
@@ -81,8 +82,9 @@ class Frontend
         }
 
         App::behavior()->addBehaviors([
-            'publicBeforeDocumentV2' => self::adjustCache(...),
-            'initWidgets'            => Widgets::initWidgets(...),
+            'publicBeforeDocumentV2'         => self::adjustCache(...),
+            'urlHandlerServeDocumentHeaders' => self::addHeaders(...),
+            'initWidgets'                    => Widgets::initWidgets(...),
         ]);
 
         return true;
@@ -98,7 +100,27 @@ class Frontend
         if (!empty($_COOKIE[self::COOKIE_UPDDT_PREFIX . self::cookieSuffix()])) {
             $timestamp = is_numeric($timestamp = $_COOKIE[self::COOKIE_UPDDT_PREFIX . self::cookieSuffix()]) ? (int) $timestamp : 0;
             App::cache()->addTime($timestamp);
+
+            // HTTP dates have a one second precision, a page cached by the browser
+            // during the second of the theme switch must not be validated by its date.
+            // Then the HTTP cache validation relies on content (ETag).
+            $since = isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) && is_string($_SERVER['HTTP_IF_MODIFIED_SINCE']) ? strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE']) : false;
+            if ($since !== false && $since <= $timestamp) {
+                unset($_SERVER['HTTP_IF_MODIFIED_SINCE']);
+            }
         }
+    }
+
+    /**
+     * Add HTTP headers to public documents.
+     *
+     * Pages content depends on theme cookie.
+     *
+     * @param   ArrayObject<int, string>    $headers    The headers
+     */
+    public static function addHeaders(ArrayObject $headers): void
+    {
+        $headers->append('Vary: Cookie');
     }
 
     public static function switchTheme(?string $theme = null): void
