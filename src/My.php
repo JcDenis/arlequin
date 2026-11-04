@@ -67,6 +67,28 @@ class My extends MyPlugin
     }
 
     /**
+     * Get blog model.
+     *
+     * Missing parts are taken from default model.
+     *
+     * @return  array<string, string>
+     */
+    public static function model(): array
+    {
+        $model = json_decode(self::settings()->getStr('model', false), true);
+        $res   = self::defaultModel();
+        if (is_array($model)) {
+            foreach (array_keys($res) as $key) {
+                if (isset($model[$key]) && is_string($model[$key])) {
+                    $res[$key] = $model[$key];
+                }
+            }
+        }
+
+        return $res;
+    }
+
+    /**
      * Get default models.
      *
      * @return  array<string, string>

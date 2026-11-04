@@ -46,15 +46,11 @@ class Manage
         }
 
         try {
-            /**
-             * @var array{name?: string, s_html?: string, e_html?: string, a_html?: string} $model
-             */
-            $model = json_decode(My::settings()->getStr('model', false), true);
-
+            $model   = My::model();
             $exclude = My::settings()->getStr('exclude');
 
             // initialize settings
-            if ($model === [] || $exclude === null || !(isset($model['e_html']) && isset($model['a_html']) && isset($model['s_html']))) {
+            if (!My::settings()->settingExists('model') || !My::settings()->settingExists('exclude')) {
                 $model = My::defaultModel();
                 My::settings()->put('model', json_encode($model), BlogWorkspaceInterface::NS_STRING, 'Arlequin configuration');
                 My::settings()->put('exclude', 'customCSS', BlogWorkspaceInterface::NS_STRING, 'Excluded themes');
@@ -65,10 +61,10 @@ class Manage
 
             // collect settings
             if (isset($_POST['mt_action_config'])) {
-                $model['e_html'] = $_POST['e_html'];
-                $model['a_html'] = $_POST['a_html'];
-                $model['s_html'] = $_POST['s_html'];
-                $exclude         = $_POST['exclude'];
+                $model['e_html'] = is_string($_POST['e_html'] ?? null) ? $_POST['e_html'] : $model['e_html'];
+                $model['a_html'] = is_string($_POST['a_html'] ?? null) ? $_POST['a_html'] : $model['a_html'];
+                $model['s_html'] = is_string($_POST['s_html'] ?? null) ? $_POST['s_html'] : $model['s_html'];
+                $exclude         = is_string($_POST['exclude'] ?? null) ? $_POST['exclude'] : '';
             }
 
             // save settings
@@ -129,14 +125,7 @@ class Manage
 
         $excluded = My::settings()->getStr('exclude', false);
 
-        /**
-         * @var array{name?: string, s_html?: string, e_html?: string, a_html?: string} $model
-         */
-        $model = json_decode(My::settings()->getStr('model', false), true);
-
-        if ($model === []) {
-            $model = My::defaultModel();
-        }
+        $model = My::model();
 
         Page::openModule(
             My::name(),

@@ -43,11 +43,8 @@ class Widgets
             return '';
         }
 
-        /**
-         * @var array{name: string, s_html: string, e_html: string, a_html: string} $model
-         */
-        $model    = My::settings()->getStr('model', false) === '' ? My::defaultModel() : json_decode(My::settings()->getStr('model', false), true);
-        $excluded = explode(';', My::settings()->getStr('excluded', false));
+        $model    = My::model();
+        $excluded = array_map(trim(...), explode(';', My::settings()->getStr('exclude', false)));
         $themes   = array_diff_key(App::themes()->getDefines(['state' => ModuleDefine::STATE_ENABLED], true), array_flip($excluded));
 
         if ($themes === []) {
