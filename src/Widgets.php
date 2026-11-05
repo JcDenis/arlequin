@@ -122,10 +122,10 @@ class Widgets
         }
 
         return $w->renderDiv(
-            (bool) $w->content_only,
-            'arlequin ' . $w->class,
+            $w->getContentOnly(),
+            'arlequin ' . $w->getClass(),
             '',
-            ($w->title !== '' ? $w->renderTitle(Html::escapeHTML($w->title)) : '') . sprintf($model['s_html'], $s_url, $res)
+            ($w->getTitle() !== '' ? $w->renderTitle(Html::escapeHTML($w->getTitle())) : '') . sprintf($model['s_html'], $s_url, $res)
         );
     }
 }
