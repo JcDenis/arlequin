@@ -202,7 +202,7 @@ class Manage
             ])
         ->render();
 
-        Page::helpBlock('arlequin');
+        Page::helpBlock(My::id() . '-index');
         Page::closeModule();
     }
 }
