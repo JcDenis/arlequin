@@ -13,6 +13,8 @@ _arlequin_ is a plugin for the open-source web publishing software called [Dotcl
 
 > Allows visitors choose a theme.
 
+A [user guide in French](https://github.com/JcDenis/arlequin/blob/master/docs/fr/utilisation.md) is available.
+
 ## REQUIREMENTS
 
 * Dotclear 2.40
@@ -30,6 +32,7 @@ you should also add widget to allow visitor to select a theme.
 
 ## LINKS
 
+* [User guide (in French)](https://github.com/JcDenis/arlequin/blob/master/docs/fr/utilisation.md)
 * [License](https://github.com/JcDenis/arlequin/blob/master/LICENSE)
 * [Packages & details](https://github.com/JcDenis/arlequin/releases) (or on [Repository](https://dotclear.org/plugin/detail/arlequin))
 * [Sources & contributions](https://github.com/JcDenis/arlequin)
