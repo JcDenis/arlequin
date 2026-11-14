@@ -7,7 +7,7 @@
     <desc>Allows visitors choose a theme</desc>
     <file>https://github.com/JcDenis/arlequin/releases/download/v2.39.2/plugin-arlequin.zip</file>
     <da:dcmin>2.40</da:dcmin>
-    <da:details>https://github.com/JcDenis/arlequin/src/branch/master/README.md</da:details>
+    <da:details>https://github.com/JcDenis/arlequin/blob/master/README.md</da:details>
     <da:support>https://github.com/JcDenis/arlequin/issues</da:support>
   </module>
 </modules>
