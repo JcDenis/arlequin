@@ -1,8 +1,7 @@
 arlequin 2.40 - 2026.11.14
 ===========================================================
 * New 2.40 widgets methods
-* Add Claude to contributors
-* Update requirements in README (Dotclear 2.40, PHP 8.2)
+* Require Dotclear 2.40 and PHP 8.2
 * [fix] Reset settings with a single notice and default values shown at once
 * [docs] Add a user guide in French, with screenshots
 * [docs] Rewrite admin help in English and French
