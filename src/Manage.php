@@ -55,7 +55,6 @@ class Manage
                 My::settings()->put('model', json_encode($model), BlogWorkspaceInterface::NS_STRING, 'Arlequin configuration');
                 My::settings()->put('exclude', 'customCSS', BlogWorkspaceInterface::NS_STRING, 'Excluded themes');
 
-                Notices::addSuccessNotice(__('Settings have been reinitialized.'));
                 App::blog()->triggerBlog();
             }
 
@@ -79,8 +78,8 @@ class Manage
 
             // restore settings
             if (isset($_POST['mt_action_restore'])) {
-                My::settings()->drop('model');
-                My::settings()->drop('exclude');
+                My::settings()->put('model', json_encode(My::defaultModel()), BlogWorkspaceInterface::NS_STRING, 'Arlequin configuration');
+                My::settings()->put('exclude', 'customCSS', BlogWorkspaceInterface::NS_STRING, 'Excluded themes');
 
                 Notices::addSuccessNotice(__('Settings have been reinitialized.'));
                 App::blog()->triggerBlog();
