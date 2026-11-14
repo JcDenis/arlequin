@@ -40,7 +40,7 @@ msgid "Excluded themes:"
 msgstr "Thèmes exclus :"
 
 msgid "Semicolon separated list of themes IDs (theme folder name). Ex: ductile;berlin"
-msgstr "Liste d'identifiants (nom du dossier du thème) de thème séparés par des points-virgules. Ex : ductile,berlin"
+msgstr "Liste d'identifiants (nom du dossier du thème) de thème séparés par des points-virgules. Ex : ductile;berlin"
 
 msgid "Save"
 msgstr "Enregistrer"
